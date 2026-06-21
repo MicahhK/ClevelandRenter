@@ -109,11 +109,20 @@
               <label for="interest">I'm interested in…</label>
               <select id="interest" name="interest">
                 <option value="">— Select one —</option>
-                <option value="specific-listing">A specific listing</option>
-                <option value="schedule-showing">Scheduling a showing</option>
-                <option value="application">The application process</option>
-                <option value="current-tenant">I'm a current tenant</option>
-                <option value="other">Something else</option>
+                <optgroup label="Available Units">
+                  <option value="elmwood-ave-upper">Elmwood Ave Upper — Lakewood, 2bd/1ba, $1,150/mo</option>
+                  <option value="cedar-rd-garden">Cedar Rd Garden Apt — Cleveland Heights, 1bd/1ba, $895/mo</option>
+                  <option value="w-25th-3bed">W 25th 3-Bed Unit — Ohio City, 3bd/1ba, $1,550/mo (coming soon)</option>
+                  <option value="madison-ave-lower">Madison Ave Lower — Lakewood, 1bd/1ba, $1,000/mo</option>
+                  <option value="fairmount-blvd-2bed">Fairmount Blvd 2-Bed — Cleveland Heights, 2bd/1ba, $1,200/mo</option>
+                  <option value="starkweather-studio">Starkweather Ave Studio — Tremont, Studio/1ba, $775/mo</option>
+                </optgroup>
+                <optgroup label="General">
+                  <option value="schedule-showing">Schedule a showing (not sure which unit)</option>
+                  <option value="application">Question about the application process</option>
+                  <option value="current-tenant">I'm a current tenant</option>
+                  <option value="other">Something else</option>
+                </optgroup>
               </select>
             </div>
 

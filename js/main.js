@@ -56,6 +56,21 @@
   });
 })();
 
+/* ─── Pre-select unit from ?unit= query param on contact page ────── */
+(function () {
+  const select = document.getElementById('interest');
+  if (!select) return;
+  const params = new URLSearchParams(window.location.search);
+  const unit = params.get('unit');
+  if (!unit) return;
+  const option = select.querySelector('option[value="' + unit + '"]');
+  if (option) {
+    option.selected = true;
+    // Scroll form into view smoothly
+    select.closest('form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+})();
+
 /* ─── Apartment filter buttons ───────────────────────────────────── */
 (function () {
   const filters = document.querySelectorAll('.filter-btn');
