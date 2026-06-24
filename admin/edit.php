@@ -173,6 +173,11 @@ function sel(array $listing, string $key, string $value): string {
           <textarea id="amenities" name="amenities" rows="5" placeholder="Hardwood floors&#10;Off-street parking&#10;Heat included"><?= htmlspecialchars($amenities_str) ?></textarea>
         </div>
 
+        <div class="form-group">
+          <label for="zillow_url">Zillow Listing URL <span class="hint">(paste full URL — cards on homepage will link here)</span></label>
+          <input type="url" id="zillow_url" name="zillow_url" value="<?= val($listing, 'zillow_url') ?>" placeholder="https://www.zillow.com/homedetails/...">
+        </div>
+
         <div class="section-title">Photo</div>
 
         <div class="form-group">

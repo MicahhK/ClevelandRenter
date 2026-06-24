@@ -560,6 +560,50 @@ p { max-width: 68ch; }
   padding: .25rem .75rem; border-radius: 999px;
 }
 
+/* ─── Airbnb-style compact listing cards ────────────────────────────── */
+.compact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.75rem 1.5rem;
+}
+.compact-card {
+  text-decoration: none;
+  color: var(--ink);
+  display: block;
+  cursor: pointer;
+}
+.compact-card:hover .compact-img { transform: scale(1.02); }
+.compact-img-wrap {
+  border-radius: 14px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  background: linear-gradient(135deg, var(--blue-pale), #d4e0f7);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 3.5rem;
+  margin-bottom: .85rem;
+  position: relative;
+}
+.compact-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .3s ease;
+}
+.compact-placeholder { pointer-events: none; }
+.compact-info { padding: 0 .1rem; }
+.compact-top { display: flex; justify-content: space-between; align-items: flex-start; gap: .5rem; margin-bottom: .2rem; }
+.compact-name { font-size: .98rem; font-weight: 700; color: var(--navy); }
+.compact-hood { font-size: .82rem; color: var(--muted); margin-bottom: .3rem; }
+.compact-meta { font-size: .85rem; color: var(--muted); margin-bottom: .5rem; }
+.compact-price { font-size: 1rem; font-weight: 700; color: var(--ink); }
+.compact-price span { font-weight: 400; color: var(--muted); }
+.compact-status {
+  font-size: .72rem; font-weight: 700; letter-spacing: .05em;
+  padding: .2rem .6rem; border-radius: 999px;
+  background: #dcfce7; color: #15803d;
+}
+.compact-status.soon { background: #fef3c7; color: #b45309; }
+
 /* ─── Responsive ─────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
   .hero-content { grid-template-columns: 1fr; }

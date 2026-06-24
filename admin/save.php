@@ -19,6 +19,7 @@ $fields = [
     'status'             => $_POST['status'] ?? 'available',
     'blurb'              => trim($_POST['blurb'] ?? ''),
     'sort_order'         => (int)($_POST['sort_order'] ?? 0),
+    'zillow_url'         => trim($_POST['zillow_url'] ?? '') ?: null,
 ];
 
 // Slug
@@ -86,7 +87,8 @@ if ($id) {
     // Existing listing — build update query
     $set = "name=:name, neighborhood=:neighborhood, neighborhood_label=:neighborhood_label,
             beds=:beds, baths=:baths, sqft=:sqft, rent=:rent, status=:status,
-            blurb=:blurb, amenities=:amenities, slug=:slug, sort_order=:sort_order";
+            blurb=:blurb, amenities=:amenities, slug=:slug, sort_order=:sort_order,
+            zillow_url=:zillow_url";
     $params = array_merge($fields, ['amenities' => $amenities, 'slug' => $slug, 'id' => $id]);
 
     // Handle image removal / replacement
