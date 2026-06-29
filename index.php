@@ -6,7 +6,7 @@ $page_title       = 'Cleveland Renter — Find Your Dream Home in Cleveland';
 $page_description = 'Discover quality rental properties in Cleveland, Lakewood, and Cleveland Heights. Professional property management with a focus on your comfort and satisfaction.';
 $current_page     = 'Home';
 
-$featured = $pdo->query("SELECT * FROM listings WHERE status != 'rented' ORDER BY sort_order ASC, id ASC LIMIT 3")->fetchAll();
+$featured = $pdo->query("SELECT * FROM listings WHERE status != 'rented' ORDER BY sort_order ASC, id ASC LIMIT 6")->fetchAll();
 
 require_once __DIR__ . '/includes/header.php';
 ?>
@@ -34,21 +34,6 @@ require_once __DIR__ . '/includes/header.php';
     </div>
   </section>
 
-  <!-- ── Why us ────────────────────────────────────────────────────── -->
-  <section class="why-us">
-    <div class="container">
-      <span class="section-label">Why choose us</span>
-      <h2 class="section-title">A local landlord who picks up the phone</h2>
-      <p class="section-intro">We're not a faceless management company. We own and care for every property ourselves — and we're here when you need us.</p>
-      <div class="features-grid">
-        <div class="feature-card"><div class="feature-icon" aria-hidden="true">🏠</div><h3>Well-Maintained Homes</h3><p>Every unit is cleaned, inspected, and move-in ready.</p></div>
-        <div class="feature-card"><div class="feature-icon" aria-hidden="true">⚡</div><h3>Fast Maintenance</h3><p>We respond to requests within 24 hours. Emergencies get same-day attention.</p></div>
-        <div class="feature-card"><div class="feature-icon" aria-hidden="true">🤝</div><h3>Fair &amp; Transparent</h3><p>No hidden fees. Lease terms written in plain English. Deposits by the book.</p></div>
-        <div class="feature-card"><div class="feature-icon" aria-hidden="true">📍</div><h3>Great Locations</h3><p>Close to dining, transit, parks, and downtown Cleveland.</p></div>
-      </div>
-    </div>
-  </section>
-
   <!-- ── Featured listings ─────────────────────────────────────────── -->
   <?php if ($featured): ?>
   <section class="featured-listings">
@@ -60,9 +45,36 @@ require_once __DIR__ . '/includes/header.php';
         </div>
         <a href="<?= BASE_URL ?>/apartments.php" class="btn btn-outline">View all listings</a>
       </div>
-      <div class="listings-grid">
-        <?php foreach ($featured as $l): ?>
-        <?php include __DIR__ . '/includes/listing-card.php'; ?>
+
+      <div class="compact-grid">
+        <?php foreach ($featured as $l):
+          $zillow = !empty($l['zillow_url']) ? $l['zillow_url'] : '#';
+          $is_soon = $l['status'] === 'coming-soon';
+        ?>
+        <a class="compact-card" href="<?= htmlspecialchars($zillow) ?>" <?= $zillow !== '#' ? 'target="_blank" rel="noopener"' : '' ?>>
+          <div class="compact-img-wrap">
+            <?php if (!empty($l['image_path'])): ?>
+              <img class="compact-img" src="<?= BASE_URL ?>/<?= htmlspecialchars($l['image_path']) ?>" alt="<?= htmlspecialchars($l['name']) ?>">
+            <?php else: ?>
+              <span class="compact-placeholder">🏠</span>
+            <?php endif; ?>
+          </div>
+          <div class="compact-info">
+            <div class="compact-top">
+              <div class="compact-name"><?= htmlspecialchars($l['name']) ?></div>
+              <span class="compact-status <?= $is_soon ? 'soon' : '' ?>">
+                <?= $is_soon ? 'Coming Soon' : 'Available' ?>
+              </span>
+            </div>
+            <div class="compact-hood"><?= htmlspecialchars($l['neighborhood_label']) ?></div>
+            <div class="compact-meta">
+              <?= htmlspecialchars($l['beds']) ?> bed &middot;
+              <?= htmlspecialchars($l['baths']) ?> bath
+              <?= $l['sqft'] ? '&middot; ' . number_format($l['sqft']) . ' sq ft' : '' ?>
+            </div>
+            <div class="compact-price">$<?= number_format($l['rent']) ?> <span>/ mo</span></div>
+          </div>
+        </a>
         <?php endforeach; ?>
       </div>
     </div>
