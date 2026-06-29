@@ -6,7 +6,7 @@ $page_title       = 'Cleveland Renter — Find Your Dream Home in Cleveland';
 $page_description = 'Discover quality rental properties in Cleveland, Lakewood, and Cleveland Heights. Professional property management with a focus on your comfort and satisfaction.';
 $current_page     = 'Home';
 
-$featured = $pdo->query("SELECT * FROM listings WHERE status != 'rented' ORDER BY sort_order ASC, id ASC LIMIT 6")->fetchAll();
+$featured = $pdo->query("SELECT * FROM listings WHERE status = 'available' ORDER BY sort_order ASC, id ASC LIMIT 6")->fetchAll();
 
 require_once __DIR__ . '/includes/header.php';
 ?>

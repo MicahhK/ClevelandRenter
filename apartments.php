@@ -6,7 +6,7 @@ $page_title       = 'Available Apartments — Cleveland Renter';
 $page_description = 'Browse available rental apartments in Cleveland, Lakewood, and Cleveland Heights managed by Cleveland Renter.';
 $current_page     = 'Apartments';
 
-$listings = $pdo->query("SELECT * FROM listings ORDER BY sort_order ASC, id ASC")->fetchAll();
+$listings = $pdo->query("SELECT * FROM listings WHERE status != 'rented' ORDER BY sort_order ASC, id ASC")->fetchAll();
 
 require_once __DIR__ . '/includes/header.php';
 ?>
