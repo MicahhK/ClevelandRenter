@@ -11,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pass = $_POST['password'] ?? '';
 
     if ($user === ADMIN_USER && $pass === ADMIN_PASS) {
-        session_regenerate_id(true);
         $_SESSION['admin_logged_in'] = true;
         header('Location: dashboard.php');
         exit;
