@@ -1,7 +1,11 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
-// Authentication handled by HTTP Basic Auth (.htaccess)
+if (empty($_SESSION['admin_logged_in'])) {
+    header('Location: index.php');
+    exit;
+}
 
+// CSRF helper
 function csrf_token(): string {
     if (empty($_SESSION['csrf_token'])) {
         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
