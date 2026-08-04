@@ -72,7 +72,7 @@ require_once __DIR__ . '/includes/header.php';
               <?= htmlspecialchars($l['baths']) ?> bath
               <?= $l['sqft'] ? '&middot; ' . number_format($l['sqft']) . ' sq ft' : '' ?>
             </div>
-            <div class="compact-price">$<?= number_format($l['rent']) ?> <span>/ mo</span></div>
+            <div class="compact-price"><?= $l['rent'] > 0 ? '$' . number_format($l['rent']) . ' <span>/ mo</span>' : 'Contact for pricing' ?></div>
           </div>
         </a>
         <?php endforeach; ?>

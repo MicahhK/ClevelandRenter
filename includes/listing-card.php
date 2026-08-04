@@ -40,7 +40,7 @@ $btn_text     = $l['status'] === 'available' ? 'Inquire / Apply' : 'Express Inte
     </ul>
     <?php endif; ?>
     <div class="listing-footer">
-      <div class="listing-rent">$<?= number_format($l['rent']) ?> <span>/ mo</span></div>
+      <div class="listing-rent"><?= $l['rent'] > 0 ? '$' . number_format($l['rent']) . ' <span>/ mo</span>' : 'Contact for pricing' ?></div>
       <?php if ($l['status'] !== 'rented'): ?>
       <a href="<?= BASE_URL ?>/contact.php?unit=<?= urlencode($l['slug']) ?>"
          class="btn <?= $btn_class ?>" style="padding:.5rem 1rem;font-size:.85rem;">
