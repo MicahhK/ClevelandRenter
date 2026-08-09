@@ -4,32 +4,34 @@ $amenities = [];
 if (!empty($l['amenities'])) {
     $amenities = json_decode($l['amenities'], true) ?: [];
 }
-$badge_class  = $l['status'] === 'available' ? 'available' : '';
-$badge_text   = match($l['status']) {
+$status_text  = match($l['status']) {
     'available'   => 'Available Now',
     'coming-soon' => 'Coming Soon',
     default       => 'Rented',
 };
-$badge_style  = $l['status'] === 'coming-soon' ? 'style="background:#e6820a"' : '';
-$btn_class    = $l['status'] === 'available' ? 'btn-primary' : 'btn-outline';
-$btn_text     = $l['status'] === 'available' ? 'Inquire / Apply' : 'Express Interest';
+$status_color = match($l['status']) {
+    'available'   => '#15803d',
+    'coming-soon' => '#e6820a',
+    default       => '#6b7280',
+};
+$btn_class = $l['status'] === 'available' ? 'btn-primary' : 'btn-outline';
+$btn_text  = $l['status'] === 'available' ? 'Inquire / Apply' : 'Express Interest';
 ?>
-<article class="listing-card" data-neighborhood="<?= htmlspecialchars($l['neighborhood']) ?>">
+<article class="listing-card" data-neighborhood="<?= htmlspecialchars($l['neighborhood']) ?>" data-beds="<?= htmlspecialchars($l['beds']) ?>">
   <div class="listing-img">
     <?php if (!empty($l['image_path'])): ?>
       <img src="<?= BASE_URL ?>/<?= htmlspecialchars($l['image_path']) ?>" alt="<?= htmlspecialchars($l['name']) ?>">
     <?php else: ?>
       🏠
     <?php endif; ?>
-    <span class="listing-badge <?= $badge_class ?>" <?= $badge_style ?>><?= $badge_text ?></span>
+    <span class="listing-badge"><?= htmlspecialchars($l['beds']) ?> bed &middot; <?= htmlspecialchars($l['baths']) ?> bath</span>
   </div>
   <div class="listing-body">
     <div class="listing-neighborhood"><?= htmlspecialchars($l['neighborhood_label']) ?></div>
     <div class="listing-name"><?= htmlspecialchars($l['name']) ?></div>
     <div class="listing-meta">
-      <span>🛏 <?= htmlspecialchars($l['beds']) ?> bed</span>
-      <span>🚿 <?= htmlspecialchars($l['baths']) ?> bath</span>
-      <?php if ($l['sqft']): ?><span>📐 <?= number_format($l['sqft']) ?> sq ft</span><?php endif; ?>
+      <span style="color:<?= $status_color ?>;font-weight:600;"><?= $status_text ?></span>
+      <?php if ($l['sqft']): ?><span><?= number_format($l['sqft']) ?> sq ft</span><?php endif; ?>
     </div>
     <p class="listing-blurb"><?= htmlspecialchars($l['blurb']) ?></p>
     <?php if ($amenities): ?>

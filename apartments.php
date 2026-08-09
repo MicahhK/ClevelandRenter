@@ -23,11 +23,11 @@ require_once __DIR__ . '/includes/header.php';
   <section class="apartments-section">
     <div class="container">
 
-      <div class="filters-bar" role="group" aria-label="Filter by neighborhood">
-        <button class="filter-btn active" data-filter="all">All Neighborhoods</button>
-        <button class="filter-btn" data-filter="cleveland">Cleveland</button>
-        <button class="filter-btn" data-filter="lakewood">Lakewood</button>
-        <button class="filter-btn" data-filter="cleveland-heights">Cleveland Heights</button>
+      <div class="filters-bar" role="group" aria-label="Filter by bedrooms">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="3">3 Bedroom</button>
+        <button class="filter-btn" data-filter="2">2 Bedroom</button>
+        <button class="filter-btn" data-filter="1">1 Bedroom</button>
       </div>
 
       <?php if ($listings): ?>

@@ -74,7 +74,7 @@
 /* ─── Apartment filter buttons ───────────────────────────────────── */
 (function () {
   const filters = document.querySelectorAll('.filter-btn');
-  const cards   = document.querySelectorAll('.listing-card[data-neighborhood]');
+  const cards   = document.querySelectorAll('.listing-card[data-beds]');
   if (!filters.length) return;
 
   filters.forEach(btn => {
@@ -83,7 +83,7 @@
       btn.classList.add('active');
       const val = btn.dataset.filter;
       cards.forEach(card => {
-        if (val === 'all' || card.dataset.neighborhood === val) {
+        if (val === 'all' || card.dataset.beds === val) {
           card.style.display = '';
         } else {
           card.style.display = 'none';
