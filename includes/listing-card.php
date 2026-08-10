@@ -44,7 +44,11 @@ $btn_text  = $l['status'] === 'available' ? 'Inquire / Apply' : 'Express Interes
     <div class="listing-footer">
       <div class="listing-rent"><?= $l['rent'] > 0 ? '$' . number_format($l['rent']) . ' <span>/ mo</span>' : 'Contact for pricing' ?></div>
       <?php if ($l['status'] !== 'rented'): ?>
-      <a href="<?= BASE_URL ?>/contact.php?unit=<?= urlencode($l['slug']) ?>"
+      <?php
+        $btn_href   = !empty($l['zillow_url']) ? htmlspecialchars($l['zillow_url']) : BASE_URL . '/contact.php?unit=' . urlencode($l['slug']);
+        $btn_target = !empty($l['zillow_url']) ? ' target="_blank" rel="noopener"' : '';
+      ?>
+      <a href="<?= $btn_href ?>"<?= $btn_target ?>
          class="btn <?= $btn_class ?>" style="padding:.5rem 1rem;font-size:.85rem;">
         <?= $btn_text ?>
       </a>
