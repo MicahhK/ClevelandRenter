@@ -1,4 +1,5 @@
 <?php
+header('Cache-Control: no-store, no-cache, must-revalidate');
 require_once __DIR__ . '/config.php';
 $page_title       = 'FAQ — Cleveland Renter';
 $page_description = 'Frequently asked questions about renting with Cleveland Renter — applications, pets, deposits, lease terms, and more.';

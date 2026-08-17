@@ -1,4 +1,5 @@
 <?php
+header('Cache-Control: no-store, no-cache, must-revalidate');
 require_once __DIR__ . '/config.php';
 $page_title       = 'Application Process — Cleveland Renter';
 $page_description = 'Learn how to apply for a rental property with Cleveland Renter. A simple, transparent process from inquiry to move-in.';
