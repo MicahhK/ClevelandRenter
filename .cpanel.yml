@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home2/arpefwmy/public_html/
+    - /bin/rsync -av --exclude='.git' --exclude='config.php' --exclude='.cpanel.yml' /home2/arpefwmy/clevelandrenter/ $DEPLOYPATH
