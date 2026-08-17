@@ -103,7 +103,7 @@ require_once __DIR__ . '/includes/header.php';
             <h3>Get in touch directly</h3>
             <div class="info-item">
               <span class="info-icon">📞</span>
-              <div><strong>Phone / Text</strong><a href="tel:2163937779">(216) 393-7779</a><div style="font-size:.82rem;color:var(--muted);margin-top:.15rem;">Mon–Sat, 9 am – 6 pm</div></div>
+              <div><strong>Phone / Text</strong><a href="tel:2163937740">(216) 393-7740</a><div style="font-size:.82rem;color:var(--muted);margin-top:.15rem;">Mon–Sat, 9 am – 6 pm</div></div>
             </div>
             <div class="info-item">
               <span class="info-icon">✉</span>

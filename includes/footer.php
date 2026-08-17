@@ -11,7 +11,7 @@
         </a>
         <p class="footer-desc">Quality rental properties in Cleveland, Lakewood, and Cleveland Heights. We're a small, hands-on team that genuinely cares about where you live.</p>
         <div class="footer-contact">
-          <a href="tel:2163937779">📞 (216) 393-7779</a>
+          <a href="tel:2163937740">📞 (216) 393-7740</a>
           <a href="mailto:clevelandrenter@gmail.com">✉ clevelandrenter@gmail.com</a>
         </div>
       </div>

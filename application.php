@@ -86,7 +86,7 @@ require_once __DIR__ . '/includes/header.php';
           <div class="info-card">
             <h3>Have questions?</h3>
             <p style="font-size:.9rem;color:var(--muted);margin-bottom:1rem;">Feel free to reach out — we look forward to potentially welcoming you to our community.</p>
-            <div class="info-item"><span class="info-icon">📞</span><div><strong>Call us</strong><a href="tel:2163937779">(216) 393-7779</a></div></div>
+            <div class="info-item"><span class="info-icon">📞</span><div><strong>Call us</strong><a href="tel:2163937740">(216) 393-7740</a></div></div>
             <div class="info-item"><span class="info-icon">✉</span><div><strong>Email</strong><a href="mailto:clevelandrenter@gmail.com">clevelandrenter@gmail.com</a></div></div>
             <a href="<?= BASE_URL ?>/faq.php" class="btn btn-outline" style="width:100%;justify-content:center;margin-top:.5rem;">Read the FAQ</a>
           </div>

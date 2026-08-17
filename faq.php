@@ -84,7 +84,7 @@ require_once __DIR__ . '/includes/header.php';
               </div>
               <div class="accordion-item">
                 <button class="accordion-btn" aria-expanded="false" aria-controls="faq-11">How do I submit a maintenance request?<span class="accordion-icon" aria-hidden="true">+</span></button>
-                <div class="accordion-panel" id="faq-11" role="region" aria-hidden="true"><div class="accordion-inner"><p>Call or text us at <a href="tel:2163937779">(216) 393-7779</a> or email <a href="mailto:clevelandrenter@gmail.com">clevelandrenter@gmail.com</a>. We respond to non-emergencies within 24 hours and emergencies (no heat, gas leak, flooding) the same day.</p></div></div>
+                <div class="accordion-panel" id="faq-11" role="region" aria-hidden="true"><div class="accordion-inner"><p>Call or text us at <a href="tel:2163937740">(216) 393-7740</a> or email <a href="mailto:clevelandrenter@gmail.com">clevelandrenter@gmail.com</a>. We respond to non-emergencies within 24 hours and emergencies (no heat, gas leak, flooding) the same day.</p></div></div>
               </div>
               <div class="accordion-item">
                 <button class="accordion-btn" aria-expanded="false" aria-controls="faq-12">Can I renew my lease?<span class="accordion-icon" aria-hidden="true">+</span></button>
@@ -103,7 +103,7 @@ require_once __DIR__ . '/includes/header.php';
           <div class="faq-sidebar-card">
             <h3>Still have questions?</h3>
             <p style="color:var(--muted);font-size:.9rem;margin-bottom:1.25rem;">We're happy to talk through anything.</p>
-            <div class="contact-detail"><span>📞</span><div><strong style="display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);">Phone</strong><a href="tel:2163937779" style="color:var(--navy);font-weight:600;text-decoration:none;">(216) 393-7779</a></div></div>
+            <div class="contact-detail"><span>📞</span><div><strong style="display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);">Phone</strong><a href="tel:2163937740" style="color:var(--navy);font-weight:600;text-decoration:none;">(216) 393-7740</a></div></div>
             <div class="contact-detail"><span>✉</span><div><strong style="display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);">Email</strong><a href="mailto:clevelandrenter@gmail.com" style="color:var(--navy);font-weight:600;text-decoration:none;font-size:.9rem;">clevelandrenter@gmail.com</a></div></div>
             <a href="<?= BASE_URL ?>/contact.php" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:1rem;">Send a Message</a>
           </div>

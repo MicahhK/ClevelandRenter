@@ -42,9 +42,9 @@ function nav_link(string $href, string $label, string $current_page): string {
       </ul>
     </nav>
 
-    <a href="tel:2163937779" class="header-phone">
+    <a href="tel:2163937740" class="header-phone">
       <span class="phone-icon" aria-hidden="true">📞</span>
-      (216) 393-7779
+      (216) 393-7740
     </a>
 
     <button class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation">
@@ -61,5 +61,5 @@ function nav_link(string $href, string $label, string $current_page): string {
   <a href="<?= BASE_URL ?>/application.php" <?= $current_page === 'Apply'      ? 'aria-current="page"' : '' ?>>Apply</a>
   <a href="<?= BASE_URL ?>/faq.php"         <?= $current_page === 'FAQ'        ? 'aria-current="page"' : '' ?>>FAQ</a>
   <a href="<?= BASE_URL ?>/contact.php"     <?= $current_page === 'Contact'    ? 'aria-current="page"' : '' ?>>Contact</a>
-  <a href="tel:2163937779" class="mobile-phone">📞 (216) 393-7779</a>
+  <a href="tel:2163937740" class="mobile-phone">📞 (216) 393-7740</a>
 </nav>
