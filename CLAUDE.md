@@ -132,5 +132,5 @@ echo '</pre>';
 - [x] Git → Bluehost deploy pipeline via Git Version Control + deploy.php
 - [ ] Add real photos to listings (via admin panel)
 - [ ] Replace Formspree placeholder in contact.php
-- [ ] Add Zillow URLs to each listing (via admin panel)
-- [ ] Domain transfer from Netfirms (separate — do last)
+- [x] Add Zillow URLs to each listing (via admin panel)
+- [x] Domain transfer from Netfirms (separate — do last)

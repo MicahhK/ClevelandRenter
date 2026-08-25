@@ -78,11 +78,11 @@ require_once __DIR__ . '/includes/header.php';
         <aside>
           <div class="info-card">
             <h3>Quick reference</h3>
-            <div class="info-item"><span class="info-icon">💰</span><div><strong>Application fee</strong>$75 per applicant (non-refundable)</div></div>
-            <div class="info-item"><span class="info-icon">💳</span><div><strong>Payment</strong>Zelle or PayPal (Friends &amp; Family)</div></div>
-            <div class="info-item"><span class="info-icon">🪪</span><div><strong>ID required</strong>Gov't-issued photo ID (front &amp; back)</div></div>
-            <div class="info-item"><span class="info-icon">⏱</span><div><strong>Screening time</strong>3–5 business days</div></div>
-            <div class="info-item"><span class="info-icon">🔍</span><div><strong>Screening service</strong>TransUnion SmartMove</div></div>
+            <div class="info-item"><div><strong>Application fee</strong>$75 per applicant (non-refundable)</div></div>
+            <div class="info-item"><div><strong>Payment</strong>Zelle or PayPal (Friends &amp; Family)</div></div>
+            <div class="info-item"><div><strong>ID required</strong>Gov't-issued photo ID (front &amp; back)</div></div>
+            <div class="info-item"><div><strong>Screening time</strong>3–5 business days</div></div>
+            <div class="info-item"><div><strong>Screening service</strong>TransUnion SmartMove</div></div>
           </div>
           <div class="info-card">
             <h3>Have questions?</h3>
