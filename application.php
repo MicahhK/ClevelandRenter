@@ -33,7 +33,7 @@ require_once __DIR__ . '/includes/header.php';
                 <h3>Submit your application &amp; documents</h3>
                 <p>Each prospective tenant must submit the following:</p>
                 <ul style="margin:.75rem 0 .75rem 1.25rem;color:var(--muted);font-size:.93rem;display:flex;flex-direction:column;gap:.5rem;">
-                  <li>A completed rental application form <em>(one per applicant — fill out digitally or print, complete, and scan)</em></li>
+                  <li>A completed rental application form <em>(one per applicant — fill it out on your computer, or print it and complete it by hand)</em></li>
                   <li>Proof of steady income — any of the following:
                     <ul style="margin:.35rem 0 0 1.25rem;display:flex;flex-direction:column;gap:.25rem;">
                       <li>Three months of recent pay stubs</li>
@@ -43,6 +43,11 @@ require_once __DIR__ . '/includes/header.php';
                   </li>
                   <li>Photo of your driver's license or government-issued ID <em>(front and back)</em></li>
                 </ul>
+                <div class="app-download">
+                  <a class="btn btn-primary" href="<?= BASE_URL ?>/assets/docs/cleveland-renter-rental-application-2026.pdf" download>Download the application form (PDF)</a>
+                  <p class="app-download-meta">Fillable PDF — type directly into it and save, or print it and fill it in by hand. One form per applicant.</p>
+                </div>
+
                 <p style="margin-bottom:.5rem;font-size:.93rem;">You may submit documents through any of the following:</p>
                 <ul style="margin:0 0 0 1.25rem;color:var(--muted);font-size:.93rem;display:flex;flex-direction:column;gap:.25rem;">
                   <li><strong>Email:</strong> <a href="mailto:clevelandrenter@gmail.com">ClevelandRenter@gmail.com</a></li>
@@ -83,6 +88,7 @@ require_once __DIR__ . '/includes/header.php';
             <div class="info-item"><div><strong>ID required</strong>Gov't-issued photo ID (front &amp; back)</div></div>
             <div class="info-item"><div><strong>Screening time</strong>3–5 business days</div></div>
             <div class="info-item"><div><strong>Screening service</strong>TransUnion SmartMove</div></div>
+            <a href="<?= BASE_URL ?>/assets/docs/cleveland-renter-rental-application-2026.pdf" download class="btn btn-outline" style="width:100%;justify-content:center;margin-top:.5rem;">Download application (PDF)</a>
           </div>
           <div class="info-card">
             <h3>Have questions?</h3>

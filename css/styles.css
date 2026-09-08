@@ -447,6 +447,25 @@ p { max-width: 68ch; }
   color: var(--ink);
 }
 .app-cta { margin-top: 2rem; }
+.app-download {
+  margin: 1.25rem 0 1.5rem;
+  padding: 1.1rem 1.25rem;
+  background: var(--blue-pale);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+.app-download .btn { width: 100%; justify-content: center; }
+.app-download-meta {
+  margin-top: .65rem;
+  font-size: .84rem;
+  color: var(--muted);
+  text-align: center;
+}
+@media (min-width: 640px) {
+  .app-download { display: flex; align-items: center; gap: 1.25rem; }
+  .app-download .btn { width: auto; flex: none; }
+  .app-download-meta { margin-top: 0; text-align: left; }
+}
 
 /* ─── FAQ page ───────────────────────────────────────────────────────── */
 .faq-section { padding: 4rem 0 5rem; }

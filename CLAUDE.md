@@ -39,7 +39,12 @@ business serving Cleveland, Lakewood, and Cleveland Heights, OH.
 ├── js/
 │   └── main.js
 ├── assets/
-│   └── images/            — Uploaded listing photos
+│   ├── images/            — Uploaded listing photos
+│   └── docs/              — Public downloads (the rental application PDF)
+├── tools/                 — Dev-only, NOT deployed (see below)
+│   ├── build_application_pdf.py
+│   ├── .htaccess          — Denies web access as a second line of defence
+│   └── source/            — Original 6-page application packet
 ├── includes/
 │   ├── db.php             — PDO connection
 │   ├── header.php         — Shared header (nav, logo, phone)
@@ -94,16 +99,61 @@ define('BASE_URL', 'https://clevelandrenter.com');
 
 Create `/home2/arpefwmy/public_html/deploy.php` with:
 
+**Important:** it must exclude `tools/` — that directory holds the original
+application packet, which still contains the Screening Services Inc. release
+page and its Social Security Number fields. It must never be web-reachable.
+
 ```php
 <?php
 $source = '/home2/arpefwmy/clevelandrenter/';
 $dest   = '/home2/arpefwmy/public_html/';
-exec("rsync -av --exclude='.git' --exclude='config.php' {$source} {$dest}", $output, $code);
+exec("rsync -av --exclude='.git' --exclude='config.php' --exclude='tools' {$source} {$dest}", $output, $code);
 echo '<pre>';
 echo $code === 0 ? "✅ Deploy successful!\n" : "❌ Deploy failed (code $code)\n";
 echo implode("\n", $output);
 echo '</pre>';
 ```
+
+## Rental application PDF
+
+The public form lives at `assets/docs/cleveland-renter-rental-application-2026.pdf`
+and is linked from `application.php`. Do not hand-edit it — regenerate it:
+
+```
+python3 tools/build_application_pdf.py    # needs pypdf + reportlab
+```
+
+The inherited packet in `tools/source/` was **already a fillable AcroForm** (91
+fields). The build script does not create a form; it corrects and prunes the
+existing one:
+
+- **Drops page 6**, the Screening Services Inc. tenant release. Page 1 of the
+  same packet names TransUnion SmartMove, so the packet referenced two different
+  screening vendors. Page 6 was also the only page asking for an SSN.
+- **Removes the SSN and Driver's License fields** from the applicant and
+  Additional Occupants sections. SmartMove has the applicant enter identity data
+  into TransUnion directly, so the business never takes custody of it — no
+  encryption, retention policy, or breach exposure to manage on shared hosting.
+- **Fixes the fee** ($50 on the form vs $75 in the instructions and on the site),
+  in the text layer as well as visually, so copy/paste and screen readers agree.
+- **Repairs a line** that rendered as mojibake (`7KHDSDUWPHQWaddress…`) because
+  the source used a non-embedded TimesNewRoman with identity encoding.
+
+Known cosmetic limitation: the source's `State:` label on the driver's licence
+row is covered visually but still present in the text layer, because those
+labels live inside Form XObjects. Harmless — there is no field to type into.
+
+### Deferred: online application form
+
+An application form on the site, posting to MySQL with an admin review screen,
+was considered and **deliberately deferred**. The blocker is custody of
+sensitive data on Bluehost shared hosting: SSNs, driver's licence numbers, and
+ID photos behind an admin panel guarded by a single plaintext password in
+`config.php`. If revisited, the shape that avoids the problem is: collect
+contact, address history, employment, income, references and disclosures in the
+web form, and leave identity data to SmartMove. Document uploads (pay stubs, ID
+photos) should either stay on the existing email/Dropbox path or be stored
+outside the webroot behind a gated download script — never in `assets/`.
 
 ## Database
 
@@ -130,6 +180,7 @@ echo '</pre>';
 - [x] Listings link to Zillow URLs when set
 - [x] Home shows available only; apartments tab shows available + coming soon
 - [x] Git → Bluehost deploy pipeline via Git Version Control + deploy.php
+- [x] Fillable rental application PDF published and linked from application.php
 - [ ] Add real photos to listings (via admin panel)
 - [ ] Replace Formspree placeholder in contact.php
 - [x] Add Zillow URLs to each listing (via admin panel)

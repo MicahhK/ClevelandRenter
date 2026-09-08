@@ -1,0 +1,14 @@
+# Developer files only. This directory holds the original 6-page application
+# packet, which still contains the Screening Services Inc. release page and its
+# Social Security Number fields. It must never be publicly reachable.
+#
+# .cpanel.yml already excludes tools/ from deployment; this is a second line of
+# defence in case a deploy path (such as deploy.php on the server) copies it.
+
+<IfModule mod_authz_core.c>
+  Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+  Order allow,deny
+  Deny from all
+</IfModule>
