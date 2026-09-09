@@ -2,12 +2,28 @@
 header('Cache-Control: no-store, no-cache, must-revalidate');
 require_once __DIR__ . '/config.php';
 require_once __DIR__ . '/includes/db.php';
+require_once __DIR__ . '/includes/buildings.php';
 
 $page_title       = 'Cleveland Renter — Find Your Dream Home in Cleveland';
 $page_description = 'Discover quality rental properties in Cleveland, Lakewood, and Cleveland Heights. Professional property management with a focus on your comfort and satisfaction.';
 $current_page     = 'Home';
 
-$featured = $pdo->query("SELECT * FROM listings WHERE status = 'available' ORDER BY sort_order ASC, id ASC LIMIT 6")->fetchAll();
+// Open-unit counts per building. Guarded so the home page still renders if
+// migrate_buildings.php hasn't been run yet and the `building` column is absent.
+$unit_counts = [];
+try {
+    $rows = $pdo->query("
+        SELECT building, status, COUNT(*) AS n
+        FROM listings
+        WHERE building IS NOT NULL AND building != '' AND status != 'rented'
+        GROUP BY building, status
+    ")->fetchAll();
+    foreach ($rows as $r) {
+        $unit_counts[$r['building']][$r['status']] = (int)$r['n'];
+    }
+} catch (PDOException $e) {
+    error_log('Building counts unavailable: ' . $e->getMessage());
+}
 
 require_once __DIR__ . '/includes/header.php';
 ?>
@@ -35,52 +51,50 @@ require_once __DIR__ . '/includes/header.php';
     </div>
   </section>
 
-  <!-- ── Featured listings ─────────────────────────────────────────── -->
-  <?php if ($featured): ?>
+  <!-- ── Our buildings ─────────────────────────────────────────────── -->
   <section class="featured-listings">
     <div class="container">
       <div class="featured-header">
         <div>
-          <span class="section-label">Available now</span>
-          <h2 class="section-title" style="margin-bottom:0">Featured Apartments</h2>
+          <span class="section-label">Our properties</span>
+          <h2 class="section-title" style="margin-bottom:0">Our Buildings</h2>
         </div>
         <a href="<?= BASE_URL ?>/apartments.php" class="btn btn-outline">View all listings</a>
       </div>
 
-      <div class="compact-grid">
-        <?php foreach ($featured as $l):
-          $zillow = !empty($l['zillow_url']) ? $l['zillow_url'] : '#';
-          $is_soon = $l['status'] === 'coming-soon';
+      <div class="buildings-grid">
+        <?php foreach (all_buildings() as $b):
+          $avail = $unit_counts[$b['slug']]['available']   ?? 0;
+          $soon  = $unit_counts[$b['slug']]['coming-soon'] ?? 0;
+          if ($avail) {
+              $status_text  = $avail . ' unit' . ($avail === 1 ? '' : 's') . ' available';
+              $status_class = '';
+          } elseif ($soon) {
+              $status_text  = $soon . ' coming soon';
+              $status_class = ' soon';
+          } else {
+              $status_text  = 'Contact for availability';
+              $status_class = ' none';
+          }
         ?>
-        <a class="compact-card" href="<?= htmlspecialchars($zillow) ?>" <?= $zillow !== '#' ? 'target="_blank" rel="noopener"' : '' ?>>
-          <div class="compact-img-wrap">
-            <?php if (!empty($l['image_path'])): ?>
-              <img class="compact-img" src="<?= BASE_URL ?>/<?= htmlspecialchars($l['image_path']) ?>" alt="<?= htmlspecialchars($l['name']) ?>">
+        <a class="building-card" href="<?= BASE_URL ?>/building.php?b=<?= urlencode($b['slug']) ?>">
+          <div class="building-img-wrap">
+            <?php if (!empty($b['image'])): ?>
+              <img class="building-img" src="<?= BASE_URL ?>/<?= htmlspecialchars($b['image']) ?>" alt="<?= htmlspecialchars($b['name']) ?>">
             <?php else: ?>
-              <span class="compact-placeholder">🏠</span>
+              <span class="building-placeholder" aria-hidden="true">&#127968;</span>
             <?php endif; ?>
           </div>
-          <div class="compact-info">
-            <div class="compact-top">
-              <div class="compact-name"><?= htmlspecialchars($l['name']) ?></div>
-              <span class="compact-status <?= $is_soon ? 'soon' : '' ?>">
-                <?= $is_soon ? 'Coming Soon' : 'Available' ?>
-              </span>
-            </div>
-            <div class="compact-hood"><?= htmlspecialchars($l['neighborhood_label']) ?></div>
-            <div class="compact-meta">
-              <?= htmlspecialchars($l['beds']) ?> bed &middot;
-              <?= htmlspecialchars($l['baths']) ?> bath
-              <?= $l['sqft'] ? '&middot; ' . number_format($l['sqft']) . ' sq ft' : '' ?>
-            </div>
-            <div class="compact-price"><?= $l['rent'] > 0 ? '$' . number_format($l['rent']) . ' <span>/ mo</span>' : 'Contact for pricing' ?></div>
+          <div class="building-info">
+            <div class="building-name"><?= htmlspecialchars($b['name']) ?></div>
+            <div class="building-city"><?= htmlspecialchars($b['city']) ?></div>
+            <span class="building-status<?= $status_class ?>"><?= htmlspecialchars($status_text) ?></span>
           </div>
         </a>
         <?php endforeach; ?>
       </div>
     </div>
   </section>
-  <?php endif; ?>
 
   <!-- ── Areas served ───────────────────────────────────────────────── -->
   <section class="areas-section">

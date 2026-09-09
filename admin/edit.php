@@ -1,6 +1,7 @@
 <?php
 require_once 'auth.php';
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/buildings.php';
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $listing = [];
@@ -120,6 +121,18 @@ function sel(array $listing, string $key, string $value): string {
             <label for="neighborhood_label">Neighborhood Label *</label>
             <input type="text" id="neighborhood_label" name="neighborhood_label" value="<?= val($listing, 'neighborhood_label') ?>" placeholder="e.g. Cleveland — Ohio City">
           </div>
+        </div>
+
+        <div class="form-group">
+          <label for="building">Building <span class="hint">(groups this unit onto a building page)</span></label>
+          <select id="building" name="building">
+            <option value="">— None —</option>
+            <?php foreach (all_buildings() as $b): ?>
+            <option value="<?= htmlspecialchars($b['slug']) ?>" <?= sel($listing, 'building', $b['slug']) ?>>
+              <?= htmlspecialchars($b['name']) ?> — <?= htmlspecialchars($b['city']) ?>
+            </option>
+            <?php endforeach; ?>
+          </select>
         </div>
 
         <div class="section-title">Unit Details</div>

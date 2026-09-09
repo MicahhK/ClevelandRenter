@@ -3,6 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require_once 'auth.php';
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/buildings.php';
 
 $flash = $_SESSION['flash'] ?? '';
 unset($_SESSION['flash']);
@@ -47,6 +48,7 @@ $status_colors = ['available' => '#15803d', 'coming-soon' => '#b45309', 'rented'
     .actions { display: flex; gap: .5rem; }
     .view-site { font-size: .8rem; color: #5a6272; text-decoration: none; }
     .view-site:hover { color: #2f5bd0; }
+    .unassigned { color: #b45309; font-size: .82rem; }
   </style>
 </head>
 <body>
@@ -72,6 +74,7 @@ $status_colors = ['available' => '#15803d', 'coming-soon' => '#b45309', 'rented'
       <thead>
         <tr>
           <th>Name</th>
+          <th>Building</th>
           <th>Neighborhood</th>
           <th>Beds / Baths</th>
           <th>Rent</th>
@@ -86,6 +89,14 @@ $status_colors = ['available' => '#15803d', 'coming-soon' => '#b45309', 'rented'
           <td>
             <strong><?= htmlspecialchars($l['name']) ?></strong><br>
             <a href="../contact.php?unit=<?= urlencode($l['slug']) ?>" class="view-site" target="_blank">view listing →</a>
+          </td>
+          <td>
+            <?php $b = !empty($l['building']) ? get_building($l['building']) : null; ?>
+            <?php if ($b): ?>
+              <a href="../building.php?b=<?= urlencode($b['slug']) ?>" class="view-site" target="_blank"><?= htmlspecialchars($b['name']) ?> ↗</a>
+            <?php else: ?>
+              <span class="unassigned">— none —</span>
+            <?php endif; ?>
           </td>
           <td><?= htmlspecialchars($l['neighborhood_label']) ?></td>
           <td><?= htmlspecialchars($l['beds']) ?> bd / <?= htmlspecialchars($l['baths']) ?> ba<?= $l['sqft'] ? ' · ' . number_format($l['sqft']) . ' sqft' : '' ?></td>
@@ -109,7 +120,7 @@ $status_colors = ['available' => '#15803d', 'coming-soon' => '#b45309', 'rented'
         </tr>
         <?php endforeach; ?>
         <?php if (empty($listings)): ?>
-        <tr><td colspan="7" style="text-align:center;color:#5a6272;padding:2rem;">No listings yet. <a href="edit.php">Add one.</a></td></tr>
+        <tr><td colspan="8" style="text-align:center;color:#5a6272;padding:2rem;">No listings yet. <a href="edit.php">Add one.</a></td></tr>
         <?php endif; ?>
       </tbody>
     </table>

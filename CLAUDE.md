@@ -23,14 +23,16 @@ business serving Cleveland, Lakewood, and Cleveland Heights, OH.
 
 ```
 /
-├── index.php              — Home page (Airbnb-style compact listing cards)
+├── index.php              — Home page (hero + 5 building cards)
 ├── index2.php             — Old alternate home page (kept for reference)
 ├── apartments.php         — All listings (available + coming soon)
+├── building.php           — One building's page (?b=<slug>), lists its units
 ├── application.php        — Application process steps
 ├── faq.php                — FAQ accordion
 ├── contact.php            — Contact form (Formspree placeholder)
 ├── setup.php              — One-time DB setup (DELETE after running)
 ├── migrate_zillow.php     — One-time migration (DELETE after running)
+├── migrate_buildings.php  — One-time migration (DELETE after running)
 ├── deploy.php             — Rsync deploy script (lives only on Bluehost, not in git)
 ├── config.php             — DB credentials (gitignored, never commit)
 ├── config.example.php     — Template for config.php
@@ -46,6 +48,7 @@ business serving Cleveland, Lakewood, and Cleveland Heights, OH.
 │   ├── .htaccess          — Denies web access as a second line of defence
 │   └── source/            — Original 6-page application packet
 ├── includes/
+│   ├── buildings.php      — The 5 buildings (config array + helpers)
 │   ├── db.php             — PDO connection
 │   ├── header.php         — Shared header (nav, logo, phone)
 │   ├── footer.php         — Shared footer
@@ -160,25 +163,53 @@ outside the webroot behind a gated download script — never in `assets/`.
 - **Host:** localhost
 - **Database:** `arpefwmy_Listings`
 - **Table:** `listings`
-- **Key columns:** id, name, neighborhood, neighborhood_label, beds, baths, sqft, rent, status, blurb, amenities (JSON), image_path, zillow_url, slug, sort_order
+- **Key columns:** id, name, neighborhood, neighborhood_label, building, beds, baths, sqft, rent, status, blurb, amenities (JSON), image_path, zillow_url, slug, sort_order
 - **Status values:** `available`, `coming-soon`, `rented`
-- Home page shows only `available` listings (limit 6)
+- Home page shows the 5 building cards, not individual units
 - Apartments page shows `available` + `coming-soon` (excludes `rented`)
+- Building pages show that building's `available` + `coming-soon` units
+
+## Buildings
+
+The five managed buildings live in `includes/buildings.php` as a PHP config
+array, not in the database — the set changes rarely, so adding one is a code
+edit rather than an admin task. Each entry has name, address, city, blurb,
+image, and sort_order, keyed by slug:
+
+```
+9414-clifton, 16700-clifton, wagar, 2052-wascana, 2162-maplewood
+```
+
+Units point back at a building through the `listings.building` column, set
+from the **Building** dropdown in the admin edit form. A unit with no building
+still appears on the Apartments page, just not on any building page — the
+admin dashboard flags those as "— none —".
+
+The home page links each building card to `building.php?b=<slug>`. Individual
+unit cards still link out to Zillow when a `zillow_url` is set.
+
+To add a building: add an entry to `includes/buildings.php`, then assign units
+to it in the admin panel. To add a photo: upload it to `assets/images/` and set
+the entry's `image` to its path (e.g. `assets/images/wagar.jpg`); without one
+the card falls back to the same gradient placeholder the unit cards use.
 
 ## Admin panel
 
 - URL: `clevelandrenter.com/admin/`
 - Login with ADMIN_USER / ADMIN_PASS from config.php
 - Add/edit/delete listings, upload photos, set Zillow URLs
-- Zillow URLs: when set, compact cards on home page link to them
+- Assign each unit to a Building so it appears on that building's page
+- Zillow URLs: when set, unit cards link out to them
 
 ## Status
 
 - [x] PHP/MySQL conversion complete
 - [x] Admin panel with CRUD + image upload
-- [x] Airbnb-style compact listing cards on home page
 - [x] Listings link to Zillow URLs when set
-- [x] Home shows available only; apartments tab shows available + coming soon
+- [x] Home shows 5 building cards linking to per-building pages
+- [x] Apartments tab shows available + coming soon
+- [ ] Add building photos to `includes/buildings.php` (currently placeholders)
+- [ ] Assign remaining units to their buildings in the admin panel
 - [x] Git → Bluehost deploy pipeline via Git Version Control + deploy.php
 - [x] Fillable rental application PDF published and linked from application.php
 - [ ] Add real photos to listings (via admin panel)

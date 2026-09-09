@@ -1,6 +1,7 @@
 <?php
 require_once 'auth.php';
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/buildings.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') { header('Location: dashboard.php'); exit; }
 verify_csrf();
@@ -20,6 +21,7 @@ $fields = [
     'blurb'              => trim($_POST['blurb'] ?? ''),
     'sort_order'         => (int)($_POST['sort_order'] ?? 0),
     'zillow_url'         => trim($_POST['zillow_url'] ?? '') ?: null,
+    'building'           => trim($_POST['building'] ?? '') ?: null,
 ];
 
 // Slug
@@ -40,6 +42,7 @@ if (!$fields['beds'])               $errors[] = 'Bedrooms is required.';
 if ($fields['rent'] <= 0)           $errors[] = 'A valid rent amount is required.';
 if (!$fields['blurb'])              $errors[] = 'Short description is required.';
 if (!in_array($fields['status'], ['available','coming-soon','rented'])) $errors[] = 'Invalid status.';
+if ($fields['building'] !== null && !in_array($fields['building'], building_slugs(), true)) $errors[] = 'Unknown building.';
 
 // Image upload
 $image_path = null;
@@ -88,7 +91,7 @@ if ($id) {
     $set = "name=:name, neighborhood=:neighborhood, neighborhood_label=:neighborhood_label,
             beds=:beds, baths=:baths, sqft=:sqft, rent=:rent, status=:status,
             blurb=:blurb, amenities=:amenities, slug=:slug, sort_order=:sort_order,
-            zillow_url=:zillow_url";
+            zillow_url=:zillow_url, building=:building";
     $params = array_merge($fields, ['amenities' => $amenities, 'slug' => $slug, 'id' => $id]);
 
     // Handle image removal / replacement
