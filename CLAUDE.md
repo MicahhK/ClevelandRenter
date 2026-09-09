@@ -32,8 +32,8 @@ business serving Cleveland, Lakewood, and Cleveland Heights, OH.
 ├── contact.php            — Contact form (Formspree placeholder)
 ├── setup.php              — One-time DB setup (DELETE after running)
 ├── migrate_zillow.php     — One-time migration (DELETE after running)
-├── migrate_buildings.php  — One-time migration (DELETE after running)
-├── migrate_units.php      — One-time unit inventory load (DELETE after running)
+├── migrate_buildings.php  — One-time migration (run + deleted from server)
+├── migrate_units.php      — One-time unit inventory load (run + deleted from server)
 ├── deploy.php             — Rsync deploy script (lives only on Bluehost, not in git)
 ├── config.php             — DB credentials (gitignored, never commit)
 ├── config.example.php     — Template for config.php
@@ -190,6 +190,10 @@ admin dashboard flags those as "— none —".
 The home page links each building card to `building.php?b=<slug>`. Individual
 unit cards still link out to Zillow when a `zillow_url` is set.
 
+The source spreadsheet (`apartment details - Sheet1.csv`) also lists **3323 E
+Fairfax Rd, Cleveland Heights**. It is deliberately not on the site — it is not
+one of the five managed buildings. Don't add it back when re-importing.
+
 To add a building: add an entry to `includes/buildings.php`, then assign units
 to it in the admin panel. To add a photo: upload it to `assets/images/` and set
 the entry's `image` to its path (e.g. `assets/images/wagar.jpg`); without one
@@ -212,10 +216,9 @@ the card falls back to the same gradient placeholder the unit cards use.
 - [x] Apartments tab shows available + coming soon
 - [ ] Add building photos to `includes/buildings.php` (currently placeholders)
 - [x] Load the 13-unit inventory from the apartment details spreadsheet
-- [ ] Decide whether 3323 E Fairfax Rd becomes a 6th building
 - [x] Git → Bluehost deploy pipeline via Git Version Control + deploy.php
 - [x] Fillable rental application PDF published and linked from application.php
-- [ ] Add real photos to listings (via admin panel)
+- [ ] Add real photos to listings (via admin panel) — pending
 - [ ] Replace Formspree placeholder in contact.php
 - [x] Add Zillow URLs to each listing (via admin panel)
 - [x] Domain transfer from Netfirms (separate — do last)
