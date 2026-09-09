@@ -37,11 +37,12 @@ $page_title       = $building['name'] . ' — ' . $building['city'] . ' — Clev
 $page_description = 'Apartments for rent at ' . $building['address'] . ', managed by Cleveland Renter.';
 $current_page     = 'Apartments';
 
-// Available units first, then coming soon. Rented units are hidden.
+// Every unit in the building, whatever its status — available first,
+// then coming soon, then rented.
 $stmt = $pdo->prepare("
     SELECT * FROM listings
-    WHERE building = ? AND status != 'rented'
-    ORDER BY FIELD(status, 'available', 'coming-soon'), sort_order ASC, id ASC
+    WHERE building = ?
+    ORDER BY FIELD(status, 'available', 'coming-soon', 'rented'), sort_order ASC, id ASC
 ");
 $stmt->execute([$building['slug']]);
 $units = $stmt->fetchAll();
@@ -76,7 +77,14 @@ require_once __DIR__ . '/includes/header.php';
       </div>
 
       <h2 class="section-title" style="margin-top:3rem;">
-        <?= $units ? 'Units at ' . htmlspecialchars($building['name']) : 'Availability' ?>
+        <?php if ($units): ?>
+          All units<span class="unit-count"><?= count($units) ?> total<?php
+            $open = count(array_filter($units, fn($u) => $u['status'] !== 'rented'));
+            echo $open ? ' · ' . $open . ' open' : '';
+          ?></span>
+        <?php else: ?>
+          Availability
+        <?php endif; ?>
       </h2>
 
       <?php if ($units): ?>
@@ -87,7 +95,7 @@ require_once __DIR__ . '/includes/header.php';
       </div>
       <?php else: ?>
       <div class="building-empty">
-        <p>No open units at <?= htmlspecialchars($building['name']) ?> right now.</p>
+        <p>No units listed for <?= htmlspecialchars($building['name']) ?> yet.</p>
         <p style="color:var(--muted);font-size:.92rem;">Units here turn over regularly. Tell us what you're looking for and we'll reach out when one opens up.</p>
         <div style="margin-top:1.25rem;">
           <a href="<?= BASE_URL ?>/contact.php" class="btn btn-primary">Contact Us</a>

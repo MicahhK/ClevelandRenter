@@ -16,15 +16,29 @@ $status_color = match($l['status']) {
 };
 $btn_class = $l['status'] === 'available' ? 'btn-primary' : 'btn-outline';
 $btn_text  = $l['status'] === 'available' ? 'Inquire / Apply' : 'Express Interest';
+
+// Bed/bath counts are sometimes unknown ('?'), in which case the badge is
+// dropped rather than rendered as "? bed · ? bath".
+$has_beds = $l['beds']  !== '' && $l['beds']  !== '?';
+$has_bath = $l['baths'] !== '' && $l['baths'] !== '?';
+
+// The bedroom filter matches on an exact string, so normalise values like
+// '1 + Den' down to the leading number. Non-numeric values (e.g. 'Studio')
+// filter on their own lowercased name.
+$beds_filter = preg_match('/\d+/', (string)$l['beds'], $m) ? $m[0] : strtolower(trim((string)$l['beds']));
 ?>
-<article class="listing-card" data-neighborhood="<?= htmlspecialchars($l['neighborhood']) ?>" data-beds="<?= htmlspecialchars($l['beds']) ?>">
+<article class="listing-card<?= $l['status'] === 'rented' ? ' is-rented' : '' ?>" data-neighborhood="<?= htmlspecialchars($l['neighborhood']) ?>" data-beds="<?= htmlspecialchars($beds_filter) ?>">
   <div class="listing-img">
     <?php if (!empty($l['image_path'])): ?>
       <img src="<?= BASE_URL ?>/<?= htmlspecialchars($l['image_path']) ?>" alt="<?= htmlspecialchars($l['name']) ?>">
     <?php else: ?>
       🏠
     <?php endif; ?>
-    <span class="listing-badge"><?= htmlspecialchars($l['beds']) ?> bed &middot; <?= htmlspecialchars($l['baths']) ?> bath</span>
+    <?php if ($has_beds || $has_bath): ?>
+    <span class="listing-badge">
+      <?= $has_beds ? htmlspecialchars($l['beds']) . ' bed' : '' ?><?= $has_beds && $has_bath ? ' &middot; ' : '' ?><?= $has_bath ? htmlspecialchars($l['baths']) . ' bath' : '' ?>
+    </span>
+    <?php endif; ?>
   </div>
   <div class="listing-body">
     <div class="listing-neighborhood"><?= htmlspecialchars($l['neighborhood_label']) ?></div>

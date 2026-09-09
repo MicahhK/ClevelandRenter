@@ -33,6 +33,7 @@ business serving Cleveland, Lakewood, and Cleveland Heights, OH.
 ├── setup.php              — One-time DB setup (DELETE after running)
 ├── migrate_zillow.php     — One-time migration (DELETE after running)
 ├── migrate_buildings.php  — One-time migration (DELETE after running)
+├── migrate_units.php      — One-time unit inventory load (DELETE after running)
 ├── deploy.php             — Rsync deploy script (lives only on Bluehost, not in git)
 ├── config.php             — DB credentials (gitignored, never commit)
 ├── config.example.php     — Template for config.php
@@ -167,7 +168,8 @@ outside the webroot behind a gated download script — never in `assets/`.
 - **Status values:** `available`, `coming-soon`, `rented`
 - Home page shows the 5 building cards, not individual units
 - Apartments page shows `available` + `coming-soon` (excludes `rented`)
-- Building pages show that building's `available` + `coming-soon` units
+- Building pages show **every** unit in the building, including `rented`,
+  ordered available → coming soon → rented
 
 ## Buildings
 
@@ -209,7 +211,8 @@ the card falls back to the same gradient placeholder the unit cards use.
 - [x] Home shows 5 building cards linking to per-building pages
 - [x] Apartments tab shows available + coming soon
 - [ ] Add building photos to `includes/buildings.php` (currently placeholders)
-- [ ] Assign remaining units to their buildings in the admin panel
+- [x] Load the 13-unit inventory from the apartment details spreadsheet
+- [ ] Decide whether 3323 E Fairfax Rd becomes a 6th building
 - [x] Git → Bluehost deploy pipeline via Git Version Control + deploy.php
 - [x] Fillable rental application PDF published and linked from application.php
 - [ ] Add real photos to listings (via admin panel)

@@ -703,6 +703,17 @@ p { max-width: 68ch; }
   padding: 2.5rem;
   box-shadow: var(--shadow-sm);
 }
+.unit-count {
+  display: inline-block;
+  margin-left: .75rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: .8rem; font-weight: 600;
+  color: var(--muted);
+  letter-spacing: .02em;
+  vertical-align: middle;
+}
+.listing-card.is-rented { opacity: .72; }
+.listing-card.is-rented:hover { opacity: 1; }
 .building-empty p:first-child { font-weight: 700; color: var(--navy); margin-bottom: .4rem; }
 .building-empty .btn { margin-right: .5rem; }
 
